@@ -1,2 +1,2 @@
 # two-sides
-A couples game
+A couples game.
