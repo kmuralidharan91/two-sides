@@ -109,21 +109,50 @@ public class MainActivity extends Activity {
         tb6.setBackgroundColor(colors.get(5));
         lb1.setBackgroundColor(colors.get(5));
 
+        // Set on click listener for top buttons
         tb1.setOnClickListener(topOnclickListener);
         tb2.setOnClickListener(topOnclickListener);
         tb3.setOnClickListener(topOnclickListener);
         tb4.setOnClickListener(topOnclickListener);
         tb5.setOnClickListener(topOnclickListener);
         tb6.setOnClickListener(topOnclickListener);
+
+        // Set on click listener for bottom buttons
+        lb1.setOnClickListener(bottomOnclickListener);
+        lb2.setOnClickListener(bottomOnclickListener);
+        lb3.setOnClickListener(bottomOnclickListener);
+        lb4.setOnClickListener(bottomOnclickListener);
+        lb5.setOnClickListener(bottomOnclickListener);
+        lb6.setOnClickListener(bottomOnclickListener);
+
     }
 
     /***
      * Method to get the selected buttons id
      * @return setSelectedButtonID_User_One,setSelectedButtonID_User_Two
      */
-    public int[] getSelectedButtons(){
-        int setSelectedButtonID_User_One=0;
-        int setSelectedButtonID_User_two=0;
+    public int[] getSelectedButtons(int setSelectedButtonID_User_One, int setSelectedButtonID_User_two){
+
+        int selectedId_One=setSelectedButtonID_User_One;
+        int selectedId_Two=setSelectedButtonID_User_two;
+
+        tb1 = (Button)findViewById(R.id.tb1);
+        tb2 = (Button)findViewById(R.id.tb2);
+        tb3 = (Button)findViewById(R.id.tb3);
+        tb4 = (Button)findViewById(R.id.tb4);
+        tb5 = (Button)findViewById(R.id.tb5);
+        tb6 = (Button)findViewById(R.id.tb6);
+
+        //Bottom buttons
+        lb1 = (Button)findViewById(R.id.lb1);
+        lb2 = (Button)findViewById(R.id.lb2);
+        lb3 = (Button)findViewById(R.id.lb3);
+        lb4 = (Button)findViewById(R.id.lb4);
+        lb5 = (Button)findViewById(R.id.lb5);
+        lb6 = (Button)findViewById(R.id.lb6);
+
+
+
         return new int[] {setSelectedButtonID_User_One,setSelectedButtonID_User_two};
     }
 
@@ -194,8 +223,19 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
-            int x = buttonColor.getColor();
-            System.out.println(x);
+            int setSelectedButtonID_User_One = buttonColor.getColor();
+            System.out.println(setSelectedButtonID_User_One);
+            getSelectedButtons(setSelectedButtonID_User_One,0);
+        }
+    };
+
+    public View.OnClickListener bottomOnclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
+            int setSelectedButtonID_User_Two = buttonColor.getColor();
+            System.out.println(setSelectedButtonID_User_Two);
+            getSelectedButtons(0,setSelectedButtonID_User_Two);
         }
     };
 
