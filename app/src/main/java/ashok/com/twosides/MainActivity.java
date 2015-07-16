@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
     Button lb4;
     Button lb5;
     Button lb6;
+    TextView centerButton;
+    int centerColorId = 0;
 
 
     @Override
@@ -84,6 +86,9 @@ public class MainActivity extends Activity {
         lb4 = (Button)findViewById(R.id.lb4);
         lb5 = (Button)findViewById(R.id.lb5);
         lb6 = (Button)findViewById(R.id.lb6);
+
+        //Center button
+        centerButton = (TextView) findViewById(R.id.show_color);
     }
     public void shuffleColors(ArrayList<Integer> colors)
     {
@@ -91,8 +96,8 @@ public class MainActivity extends Activity {
         Random rnd = new Random();
         int color = rnd.nextInt(5);
 
-        TextView textView = (TextView) findViewById(R.id.show_color);
-        textView.setBackgroundColor(colors.get(color));
+        centerButton.setBackgroundColor(colors.get(color));
+        centerColorId = colors.get(color);
         tb1.setBackgroundColor(colors.get(0));
         lb6.setBackgroundColor(colors.get(0));
 
@@ -129,44 +134,6 @@ public class MainActivity extends Activity {
 
     }
 
-    /***
-     * Method to get the selected buttons id
-     * @return setSelectedButtonID_User_One,setSelectedButtonID_User_Two
-     */
-    public int[] getSelectedButtons(int setSelectedButtonID_User_One, int setSelectedButtonID_User_two){
-
-        int selectedId_One=setSelectedButtonID_User_One;
-        int selectedId_Two=setSelectedButtonID_User_two;
-
-        tb1 = (Button)findViewById(R.id.tb1);
-        tb2 = (Button)findViewById(R.id.tb2);
-        tb3 = (Button)findViewById(R.id.tb3);
-        tb4 = (Button)findViewById(R.id.tb4);
-        tb5 = (Button)findViewById(R.id.tb5);
-        tb6 = (Button)findViewById(R.id.tb6);
-
-        //Bottom buttons
-        lb1 = (Button)findViewById(R.id.lb1);
-        lb2 = (Button)findViewById(R.id.lb2);
-        lb3 = (Button)findViewById(R.id.lb3);
-        lb4 = (Button)findViewById(R.id.lb4);
-        lb5 = (Button)findViewById(R.id.lb5);
-        lb6 = (Button)findViewById(R.id.lb6);
-
-
-
-        return new int[] {setSelectedButtonID_User_One,setSelectedButtonID_User_two};
-    }
-
-    /***
-     * Method to disable other unselected buttons
-     * @return unSelectedButtonIds
-     */
-    public int[] disableUnSelectedButtons(){
-
-        int unSelectedButtonIds[]=new int[]{0};
-        return unSelectedButtonIds;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -225,9 +192,14 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
-            int setSelectedButtonID_User_One = buttonColor.getColor();
-            System.out.println(setSelectedButtonID_User_One);
-            getSelectedButtons(setSelectedButtonID_User_One,0);
+            int selectedColorId = buttonColor.getColor();
+            System.out.println();
+            if (selectedColorId == centerColorId){
+                System.out.println("Win");
+            }
+            else{
+                System.out.println("Fail");
+            }
         }
     };
 
@@ -235,9 +207,15 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
-            int setSelectedButtonID_User_Two = buttonColor.getColor();
-            System.out.println(setSelectedButtonID_User_Two);
-            getSelectedButtons(0,setSelectedButtonID_User_Two);
+            int selectedColorId = buttonColor.getColor();
+            System.out.println(selectedColorId);
+            if (selectedColorId == centerColorId){
+                System.out.println("Win");
+
+            }
+            else{
+                System.out.println("Fail");
+            }
         }
     };
 
