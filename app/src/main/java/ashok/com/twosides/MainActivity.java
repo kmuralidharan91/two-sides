@@ -2,6 +2,7 @@ package ashok.com.twosides;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -36,7 +37,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getButtons();
         final ArrayList<Integer> arrayList = new ArrayList<Integer>();
         arrayList.add(Color.BLUE);
@@ -81,8 +81,6 @@ public class MainActivity extends Activity {
         lb4 = (Button)findViewById(R.id.lb4);
         lb5 = (Button)findViewById(R.id.lb5);
         lb6 = (Button)findViewById(R.id.lb6);
-
-
     }
     public void shuffleColors(ArrayList<Integer> colors)
     {
@@ -104,11 +102,42 @@ public class MainActivity extends Activity {
         tb6.setBackgroundColor(colors.get(5));
         lb1.setBackgroundColor(colors.get(5));
     }
+
+    /***
+     * Method to get the selected buttons id
+     * @return setSelectedButtonID_User_One,setSelectedButtonID_User_Two
+     */
+    public int[] getSelectedButtons(){
+        int setSelectedButtonID_User_One=0;
+        int setSelectedButtonID_User_two=0;
+        return new int[] {setSelectedButtonID_User_One,setSelectedButtonID_User_two};
+    }
+
+    /***
+     * Method to disable other unselected buttons
+     * @return unSelectedButtonIds
+     */
+    public int[] disableUnSelectedButtons(){
+
+        int unSelectedButtonIds[]=new int[]{0};
+        return unSelectedButtonIds;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    /***
+     * Method to calculate scores by players
+     * @return
+     */
+    public int[] calculatePoint(){
+        int scoredByUser_One=0;
+        int scoredByUser_Two=0;
+        return new int[]{scoredByUser_One,scoredByUser_Two};
     }
 
     @Override
