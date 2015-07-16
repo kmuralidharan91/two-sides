@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +39,8 @@ public class MainActivity extends Activity {
     Button lb5;
     Button lb6;
     TextView centerButton;
+    TextView timer1;
+    TextView timer2;
     int centerColorId = 0;
     boolean isPlayerOneSelected;
     boolean isPlayerTwoSelected;
@@ -45,12 +48,15 @@ public class MainActivity extends Activity {
     int level=1;
     int playerOneScore;
     int playerTwoScore;
+    double levelTime;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        timer1 = (TextView)findViewById(R.id.timer1);
+        timer2 = (TextView)findViewById(R.id.timer2);
         setupLevel();
     }
 
@@ -77,7 +83,10 @@ public class MainActivity extends Activity {
         arrayList.add(Color.MAGENTA);
         Collections.shuffle(arrayList);
         shuffleColors(arrayList);
-
+        Log.w("LEVEL TIME", String.valueOf((50000 / level)));
+        levelTime = Math.ceil(50000/level);
+        timer1.setText(String.valueOf( levelTime));
+        timer2.setText(String.valueOf( levelTime));
         countDownTimer = new CountDownTimer(50000/level,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -86,6 +95,8 @@ public class MainActivity extends Activity {
                     closeLevel();
                     showAlert();
                 }
+                timer1.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
+                timer2.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
             }
 
             @Override
@@ -190,6 +201,7 @@ public class MainActivity extends Activity {
 
         if (level==10)
         {
+            Toast.makeText(this,(playerOneScore>=playerTwoScore)?"Winner is Player1":"Winner is Player2",Toast.LENGTH_SHORT).show();
             //call end game
             endGame();
             return;
@@ -198,7 +210,7 @@ public class MainActivity extends Activity {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Game over")
-                    .setPositiveButton("Next level ->", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Next level("+(level+1)+")->", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // FIRE ZE MISSILES!
                             level+=1;
@@ -210,7 +222,7 @@ public class MainActivity extends Activity {
                             setupLevel();
                         }
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("<-- Home", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
                             endGame();
@@ -225,6 +237,9 @@ public class MainActivity extends Activity {
                 endGame();
             }
         });
+        timer1.setText(String.valueOf("SCORE:" + playerOneScore));
+        timer2.setText(String.valueOf("SCORE:" + playerTwoScore));
+
 
     }
 

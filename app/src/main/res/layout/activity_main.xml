@@ -77,14 +77,31 @@
     <RelativeLayout
         android:layout_height="50dp"
         android:id="@+id/centre_part"
-        android:layout_centerInParent="true"
-        android:layout_width="100dp">
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/bottomSide"
+        android:layout_alignEnd="@+id/bottomSide">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="TIMER"
+            android:id="@+id/timer1"/>
         <TextView
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:background="#000000"
-            android:id="@+id/show_color"/>
+            android:layout_width="100dp"
+            android:gravity="center|center_vertical|center_horizontal"
+            android:background="#ffffff"
+            android:id="@+id/show_color"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="TIMER2"
+            android:id="@+id/timer2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <RelativeLayout
