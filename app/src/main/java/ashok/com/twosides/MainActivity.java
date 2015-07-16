@@ -9,8 +9,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
+import java.util.TimerTask;
 
 
 public class MainActivity extends Activity {
@@ -42,11 +45,13 @@ public class MainActivity extends Activity {
         arrayList.add(Color.RED);
         arrayList.add(Color.YELLOW);
         arrayList.add(Color.MAGENTA);
+
         shuffleColors(arrayList);
 
-        new CountDownTimer(30000, 5000) {
+        CountDownTimer countDownTimer = new CountDownTimer(3000, 5000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Collections.shuffle(arrayList);
                 shuffleColors(arrayList);
             }
 
@@ -55,7 +60,7 @@ public class MainActivity extends Activity {
             }
 
         };
-
+        countDownTimer.start();
     }
 
 
