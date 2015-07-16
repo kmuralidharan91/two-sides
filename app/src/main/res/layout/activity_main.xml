@@ -70,9 +70,21 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_height="50dp"
+        android:id="@+id/centre_part"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="#000000"
+            android:id="@+id/show_color"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="51dp"
