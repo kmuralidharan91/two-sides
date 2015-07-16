@@ -1,10 +1,12 @@
 package ashok.com.twosides;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -58,6 +60,9 @@ public class MainActivity extends Activity {
         countDownTimer = null;
     }
 
+    void endGame(){
+        this.finish();
+    }
     void setupLevel()
     {
         getButtons();
@@ -165,15 +170,6 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    /***
-     * Method to calculate scores by players
-     * @return
-     */
-    public int[] calculatePoint(){
-        int scoredByUser_One=0;
-        int scoredByUser_Two=0;
-        return new int[]{scoredByUser_One,scoredByUser_Two};
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -189,8 +185,15 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void showAlert(){
 
+        if (level==10)
+        {
+            //call end game
+            endGame();
+            return;
+        }
         //TODO: Which player wins or Draw should notify here
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -199,6 +202,10 @@ public class MainActivity extends Activity {
                         public void onClick(DialogInterface dialog, int id) {
                             // FIRE ZE MISSILES!
                             level+=1;
+                            Log.w("LEVEL", String.valueOf(level));
+                            Log.w("PLAYER1", String.valueOf(playerOneScore));
+                            Log.w("PLAYER2", String.valueOf(playerTwoScore));
+
                             isPlayerOneSelected = isPlayerTwoSelected = false;
                             setupLevel();
                         }
@@ -206,12 +213,18 @@ public class MainActivity extends Activity {
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
-                            //Call end game
+                            endGame();
                         }
                     });
             // Create the AlertDialog object and return it
              builder.create();
              builder.show();
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                endGame();
+            }
+        });
 
     }
 
@@ -241,7 +254,7 @@ public class MainActivity extends Activity {
             int selectedColorId = buttonColor.getColor();
             System.out.println(selectedColorId);
             if (selectedColorId == centerColorId){
-                playerTwoScore+=2;
+                playerTwoScore+=1;
             }
             else{
                 System.out.println("Fail");
