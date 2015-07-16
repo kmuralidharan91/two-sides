@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +91,8 @@ public class MainActivity extends Activity {
         Random rnd = new Random();
         int color = rnd.nextInt(5);
 
-        lb6.setBackgroundColor(colors.get(color));
+        TextView textView = (TextView) findViewById(R.id.show_color);
+        textView.setBackgroundColor(colors.get(color));
         tb1.setBackgroundColor(colors.get(0));
         lb6.setBackgroundColor(colors.get(0));
 
