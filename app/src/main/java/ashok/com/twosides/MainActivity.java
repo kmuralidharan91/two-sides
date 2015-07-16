@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
 
 
 public class MainActivity extends Activity {
@@ -105,6 +108,13 @@ public class MainActivity extends Activity {
 
         tb6.setBackgroundColor(colors.get(5));
         lb1.setBackgroundColor(colors.get(5));
+
+        tb1.setOnClickListener(topOnclickListener);
+        tb2.setOnClickListener(topOnclickListener);
+        tb3.setOnClickListener(topOnclickListener);
+        tb4.setOnClickListener(topOnclickListener);
+        tb5.setOnClickListener(topOnclickListener);
+        tb6.setOnClickListener(topOnclickListener);
     }
 
     /***
@@ -179,4 +189,14 @@ public class MainActivity extends Activity {
              builder.show();
 
     }
+
+    public View.OnClickListener topOnclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
+            int x = buttonColor.getColor();
+            System.out.println(x);
+        }
+    };
+
 }
