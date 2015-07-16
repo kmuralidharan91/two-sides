@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getButtons();
         final ArrayList<Integer> arrayList = new ArrayList<Integer>();
         arrayList.add(Color.BLUE);
