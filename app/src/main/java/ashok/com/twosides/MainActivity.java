@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
         shuffleColors(arrayList);
 
-        CountDownTimer countDownTimer = new CountDownTimer(3000, 5000) {
+        CountDownTimer countDownTimer = new CountDownTimer(30000,5000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Collections.shuffle(arrayList);
