@@ -1,20 +1,18 @@
 package ashok.com.twosides;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.TimerTask;
 
 
 public class MainActivity extends Activity {
@@ -57,6 +55,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFinish() {
+                showAlert();
             }
 
         };
@@ -84,6 +83,11 @@ public class MainActivity extends Activity {
     }
     public void shuffleColors(ArrayList<Integer> colors)
     {
+        //Displaying data
+        Random rnd = new Random();
+        int color = rnd.nextInt(5);
+
+        lb6.setBackgroundColor(colors.get(color));
         tb1.setBackgroundColor(colors.get(0));
         lb6.setBackgroundColor(colors.get(0));
 
@@ -153,5 +157,26 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void showAlert(){
+
+        //TODO: Which player wins or Draw should notify here
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Game over")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // FIRE ZE MISSILES!
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            // Create the AlertDialog object and return it
+             builder.create();
+             builder.show();
+
     }
 }
