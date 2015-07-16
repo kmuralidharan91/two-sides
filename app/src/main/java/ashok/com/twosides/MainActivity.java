@@ -7,9 +7,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -35,14 +37,32 @@ public class MainActivity extends Activity {
     Button lb6;
     TextView centerButton;
     int centerColorId = 0;
+    boolean isPlayerOneSelected;
+    boolean isPlayerTwoSelected;
+    CountDownTimer countDownTimer;
+    int level=1;
+    int playerOneScore;
+    int playerTwoScore;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupLevel();
+    }
 
+    void closeLevel()
+    {
+        countDownTimer.cancel();
+        countDownTimer = null;
+    }
+
+    void setupLevel()
+    {
         getButtons();
+        enableTopButtons();
+        enableBottomButtons();
         final ArrayList<Integer> arrayList = new ArrayList<Integer>();
         arrayList.add(Color.BLUE);
         arrayList.add(Color.CYAN);
@@ -50,14 +70,17 @@ public class MainActivity extends Activity {
         arrayList.add(Color.RED);
         arrayList.add(Color.YELLOW);
         arrayList.add(Color.MAGENTA);
-
+        Collections.shuffle(arrayList);
         shuffleColors(arrayList);
 
-        CountDownTimer countDownTimer = new CountDownTimer(30000,5000) {
+        countDownTimer = new CountDownTimer(50000/level,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Collections.shuffle(arrayList);
-                shuffleColors(arrayList);
+                if (isPlayerOneSelected && isPlayerTwoSelected)
+                {
+                    closeLevel();
+                    showAlert();
+                }
             }
 
             @Override
@@ -68,7 +91,6 @@ public class MainActivity extends Activity {
         };
         countDownTimer.start();
     }
-
 
     void getButtons()
     {
@@ -173,14 +195,18 @@ public class MainActivity extends Activity {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Game over")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Next level ->", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // FIRE ZE MISSILES!
+                            level+=1;
+                            isPlayerOneSelected = isPlayerTwoSelected = false;
+                            setupLevel();
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
+                            //Call end game
                         }
                     });
             // Create the AlertDialog object and return it
@@ -192,11 +218,12 @@ public class MainActivity extends Activity {
     public View.OnClickListener topOnclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            isPlayerOneSelected = true;
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
             int selectedColorId = buttonColor.getColor();
             System.out.println();
             if (selectedColorId == centerColorId){
-                System.out.println("Win");
+                playerOneScore += 1;
             }
             else{
                 System.out.println("Fail");
@@ -209,12 +236,12 @@ public class MainActivity extends Activity {
     public View.OnClickListener bottomOnclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            isPlayerTwoSelected = true;
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
             int selectedColorId = buttonColor.getColor();
             System.out.println(selectedColorId);
             if (selectedColorId == centerColorId){
-                System.out.println("Win");
-
+                playerTwoScore+=2;
             }
             else{
                 System.out.println("Fail");
@@ -240,5 +267,22 @@ public class MainActivity extends Activity {
         lb4.setVisibility(View.INVISIBLE);
         lb5.setVisibility(View.INVISIBLE);
         lb6.setVisibility(View.INVISIBLE);
+    }
+    public void enableTopButtons(){
+        tb1.setVisibility(View.VISIBLE);
+        tb2.setVisibility(View.VISIBLE);
+        tb3.setVisibility(View.VISIBLE);
+        tb4.setVisibility(View.VISIBLE);
+        tb5.setVisibility(View.VISIBLE);
+        tb6.setVisibility(View.VISIBLE);
+    }
+
+    public void enableBottomButtons() {
+        lb1.setVisibility(View.VISIBLE);
+        lb2.setVisibility(View.VISIBLE);
+        lb3.setVisibility(View.VISIBLE);
+        lb4.setVisibility(View.VISIBLE);
+        lb5.setVisibility(View.VISIBLE);
+        lb6.setVisibility(View.VISIBLE);
     }
 }
