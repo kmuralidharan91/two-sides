@@ -8,19 +8,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play">
+        android:text="Play"
+        android:id="@+id/bt_play">
 
     </Button>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"/>
+        android:text="Settings"
+        android:id="@+id/bt_settings"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"/>
+        android:text="Exit"
+        android:id="@+id/bt_exit"/>
 </LinearLayout>
 
 </LinearLayout>
