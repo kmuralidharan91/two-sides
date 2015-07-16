@@ -200,6 +200,8 @@ public class MainActivity extends Activity {
             else{
                 System.out.println("Fail");
             }
+            disableTopButtons();
+            v.setVisibility(View.VISIBLE);
         }
     };
 
@@ -216,7 +218,26 @@ public class MainActivity extends Activity {
             else{
                 System.out.println("Fail");
             }
+            disableBottomButtons();
+            v.setVisibility(View.VISIBLE);
         }
     };
 
+    public void disableTopButtons(){
+        tb1.setVisibility(View.INVISIBLE);
+        tb2.setVisibility(View.INVISIBLE);
+        tb3.setVisibility(View.INVISIBLE);
+        tb4.setVisibility(View.INVISIBLE);
+        tb5.setVisibility(View.INVISIBLE);
+        tb6.setVisibility(View.INVISIBLE);
+    }
+
+    public void disableBottomButtons() {
+        lb1.setVisibility(View.INVISIBLE);
+        lb2.setVisibility(View.INVISIBLE);
+        lb3.setVisibility(View.INVISIBLE);
+        lb4.setVisibility(View.INVISIBLE);
+        lb5.setVisibility(View.INVISIBLE);
+        lb6.setVisibility(View.INVISIBLE);
+    }
 }
