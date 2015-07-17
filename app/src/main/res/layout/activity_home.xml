@@ -28,7 +28,15 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/bt_play"
         android:layout_alignStart="@+id/bt_play" />
-
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructions"
+            android:id="@+id/bt_instructions"
+            android:layout_below="@+id/bt_settings"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/bt_play"
+            android:layout_alignStart="@+id/bt_play" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
