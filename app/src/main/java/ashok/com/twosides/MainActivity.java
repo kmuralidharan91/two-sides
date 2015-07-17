@@ -95,8 +95,8 @@ public class MainActivity extends Activity {
                     closeLevel();
                     showAlert();
                 }
-                timer1.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
-                timer2.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
+                timer1.setText(String.valueOf((int)millisUntilFinished/1000)+" secs");
+                timer2.setText(String.valueOf((int)millisUntilFinished/1000)+" secs");
             }
 
             @Override
