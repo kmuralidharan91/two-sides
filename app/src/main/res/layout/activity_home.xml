@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:background="@drawable/image1">
+
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:id="@+id/bt_play"
-        android:layout_marginBottom="71dp"
-        android:layout_above="@+id/bt_settings"
-        android:layout_alignLeft="@+id/bt_exit"
-        android:layout_alignStart="@+id/bt_exit">
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        >
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_play"
+            android:textSize="100sp"
+            android:id="@+id/bt_play"
+            android:background="@android:color/transparent"
+            android:textColor="#B44583"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp">
+        </Button>
 
-    </Button>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_settings"
+            android:textSize="100sp"
+            android:id="@+id/bt_settings"
+            android:background="@android:color/transparent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/bt_play"
+            android:textColor="#B44583"
+            android:padding="10dp"
+            >
+        </Button>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:id="@+id/bt_settings"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/bt_play"
-        android:layout_alignStart="@+id/bt_play" />
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instructions"
+            android:text="@string/icon_instructions"
+            android:textSize="100sp"
             android:id="@+id/bt_instructions"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_below="@+id/bt_settings"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/bt_play"
-            android:layout_alignStart="@+id/bt_play" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Exit"
-        android:id="@+id/bt_exit"
-        android:layout_below="@+id/bt_settings"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp" />
-    </RelativeLayout>
-</LinearLayout>
+            android:textColor="#B44583"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+        />
 
-</LinearLayout>
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:gravity="center"
+        android:text="@string/icon_exit"
+        android:textSize="100sp"
+        android:id="@+id/bt_exit"
+        android:background="@android:color/transparent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/bt_instructions"
+        android:textColor="#B44583"
+        />
+    </RelativeLayout>
+ </LinearLayout>

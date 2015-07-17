@@ -2,6 +2,7 @@ package ashok.com.twosides;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,12 @@ public class HomeActivity extends Activity {
         Button exit = (Button)findViewById(R.id.bt_exit);
         Button setting = (Button)findViewById(R.id.bt_settings);
         Button instructions = (Button)findViewById(R.id.bt_instructions);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+        play.setTypeface(font);
+        exit.setTypeface(font);
+        setting.setTypeface(font);
+        instructions.setTypeface(font);
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override

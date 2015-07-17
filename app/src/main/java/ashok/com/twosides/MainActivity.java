@@ -3,13 +3,21 @@ package ashok.com.twosides;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.IBinder;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,52 +29,60 @@ import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-
+import android.media.MediaPlayer;
 
 
 public class MainActivity extends Activity {
 
-    Button tb1;
-    Button tb2;
-    Button tb3;
-    Button tb4;
-    Button tb5;
-    Button tb6;
-    Button lb1;
-    Button lb2;
-    Button lb3;
-    Button lb4;
-    Button lb5;
-    Button lb6;
-    TextView centerButton;
-    TextView timer1;
-    TextView timer2;
+    MediaPlayer player;
+    Vibrator vibrator;
+    Button tb1,tb2,tb3,tb4,tb5,tb6,lb1,lb2,lb3,lb4,lb5,lb6;
+    TextView centerButton,timer1,timer2;
     int centerColorId = 0;
-    boolean isPlayerOneSelected;
-    boolean isPlayerTwoSelected;
+    boolean isPlayerOneSelected,isPlayerTwoSelected;
     CountDownTimer countDownTimer;
     int level=1;
-    int playerOneScore;
-    int playerTwoScore;
+    int playerOneScore,playerTwoScore;
     double levelTime;
-    SharedPreferences settings;
+    SharedPreferences settings,vibration,music;
     SharedPreferences.Editor editor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         timer1 = (TextView)findViewById(R.id.timer1);
         timer2 = (TextView)findViewById(R.id.timer2);
         settings = this.getSharedPreferences("TS", 0);
+        vibration = this.getSharedPreferences("TS",0);
+        music = this.getSharedPreferences("TS",0);
+
         if (settings.getBoolean("appLaunched",false))
         setupLevel();
         else
         setupTour();
+
+        AssetFileDescriptor afd;
+        try {
+        // Read the music file from the asset folder
+            afd = getAssets().openFd("game_background.mp3");
+        // Creation of new media player;
+            player = new MediaPlayer();
+        // Set the player music source.
+            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(),afd.getLength());
+        // Set the looping and play the music.
+            player.setLooping(true);
+            player.prepare();
+            if (music.getBoolean("Music",true))
+            player.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void closeLevel()
@@ -132,7 +148,7 @@ public class MainActivity extends Activity {
                         setupLevel();
                         editor = settings.edit();
                         editor.putBoolean("appLaunched", true);
-                        editor.commit();
+                        editor.apply();
                     }
 
                     @Override
@@ -228,7 +244,6 @@ public class MainActivity extends Activity {
     }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void showAlert(){
-
         if (level==10)
         {
             Toast.makeText(this,(playerOneScore>=playerTwoScore)?"Winner is Player1":"Winner is Player2",Toast.LENGTH_SHORT).show();
@@ -284,6 +299,7 @@ public class MainActivity extends Activity {
             isPlayerOneSelected = true;
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
             int selectedColorId = buttonColor.getColor();
+            vibrator.vibrate(200);
             System.out.println();
             if (selectedColorId == centerColorId){
                 playerOneScore += 1;
@@ -303,6 +319,7 @@ public class MainActivity extends Activity {
             ColorDrawable buttonColor = (ColorDrawable) v.getBackground();
             int selectedColorId = buttonColor.getColor();
             System.out.println(selectedColorId);
+            vibrator.vibrate(200);
             if (selectedColorId == centerColorId){
                 playerTwoScore+=1;
             }
@@ -347,5 +364,31 @@ public class MainActivity extends Activity {
         lb4.setVisibility(View.VISIBLE);
         lb5.setVisibility(View.VISIBLE);
         lb6.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.pause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        player.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        player.start();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        player.stop();
+        player=null;
     }
 }
