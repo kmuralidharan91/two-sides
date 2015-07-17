@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
                 .setTarget(target)
                 .setContentTitle("Match the color")
                 .setContentText("Identify same color in your grid before your opponent select")
-                .hideOnTouchOutside()
+                .hideOnTouchOutside().setStyle(R.style.SampleTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
