@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="51dp"
         android:id="@+id/bottomSide">
 
         <Button
@@ -123,6 +123,38 @@
             android:layout_toRightOf="@+id/timer2"
             android:scaleY="-1"
             android:layout_width="30dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:id="@+id/player_id"
+        android:scaleX="-1"
+        android:scaleY="-1"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="6dp"
+        android:layout_below="@+id/topSide"
+        android:layout_centerHorizontal="true"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_height="match_parent"
+            android:text="Player 1" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:id="@+id/player_id2"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/bottomSide"
+        android:layout_centerHorizontal="true"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_height="match_parent"
+            android:text="Player 2" />
     </RelativeLayout>
 
     <RelativeLayout
