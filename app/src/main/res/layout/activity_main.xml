@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:layout_width="100dp"
             android:gravity="center|center_vertical|center_horizontal"
-            android:background="#ffffff"
+            android:background="#859CC3"
             android:id="@+id/show_color"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
