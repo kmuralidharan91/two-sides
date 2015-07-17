@@ -10,7 +10,7 @@ import android.os.Handler;
  * Created by MuraliKDharan on 15/07/15.
  */
 public class SplashActivity extends Activity {
-    private final int SPLASH_DISPLAY_TIMER = 4000;
+    private final int SPLASH_DISPLAY_TIMER = 2000;
 
     @Override
     protected void onStart() {
