@@ -22,6 +22,7 @@ public class HomeActivity extends Activity {
         Button play = (Button)findViewById(R.id.bt_play);
         Button exit = (Button)findViewById(R.id.bt_exit);
         Button setting = (Button)findViewById(R.id.bt_settings);
+        Button instructions = (Button)findViewById(R.id.bt_instructions);
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,14 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        instructions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),InstructionsActivity.class);
                 startActivity(intent);
             }
         });

@@ -4,19 +4,22 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +52,8 @@ public class MainActivity extends Activity {
     int playerOneScore;
     int playerTwoScore;
     double levelTime;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -57,13 +62,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         timer1 = (TextView)findViewById(R.id.timer1);
         timer2 = (TextView)findViewById(R.id.timer2);
+        settings = this.getSharedPreferences("TS", 0);
+        if (settings.getBoolean("appLaunched",false))
         setupLevel();
+        else
+        setupTour();
     }
 
     void closeLevel()
     {
-        countDownTimer.cancel();
-        countDownTimer = null;
+        if (countDownTimer!=null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
 
     void endGame(){
@@ -95,8 +106,8 @@ public class MainActivity extends Activity {
                     closeLevel();
                     showAlert();
                 }
-                timer1.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
-                timer2.setText(String.valueOf("TICK:"+ (int)millisUntilFinished/1000));
+                timer1.setText(String.valueOf((int)millisUntilFinished/1000)+" secs");
+                timer2.setText(String.valueOf((int)millisUntilFinished/1000)+" secs");
             }
 
             @Override
@@ -108,6 +119,33 @@ public class MainActivity extends Activity {
         countDownTimer.start();
     }
 
+    void setupTour(){
+        ViewTarget target = new ViewTarget(R.id.show_color, this);
+        new ShowcaseView.Builder(this)
+                .setTarget(target)
+                .setContentTitle("Match the color")
+                .setContentText("Identify same color in your grid before your opponent select")
+                .hideOnTouchOutside()
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                        setupLevel();
+                        editor = settings.edit();
+                        editor.putBoolean("appLaunched", true);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                    }
+                })
+                .build();
+    }
     void getButtons()
     {
         //Top buttons
@@ -175,14 +213,6 @@ public class MainActivity extends Activity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -230,7 +260,12 @@ public class MainActivity extends Activity {
                     });
             // Create the AlertDialog object and return it
              builder.create();
-             builder.show();
+        try{
+            builder.show();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
